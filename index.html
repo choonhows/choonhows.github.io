@@ -129,6 +129,14 @@
       </div>
     </div>
     <div id="root"></div>
+    <script>
+      window.setTimeout(() => {
+        document.documentElement.classList.add('site-ready')
+        const loader = document.getElementById('site-loader')
+        loader?.setAttribute('aria-hidden', 'true')
+        window.setTimeout(() => loader?.remove(), 450)
+      }, 3000)
+    </script>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>
