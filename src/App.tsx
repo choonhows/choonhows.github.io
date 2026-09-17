@@ -37,6 +37,15 @@ type NavItem = (typeof navItems)[number]['id']
 const projects = [
   {
     number: '01',
+    title: 'Chronos',
+    kind: 'Automated university class scheduling',
+    summary: 'ARM-guided genetic scheduling with tested APIs and AI-assisted Jira/GitHub MCP ticketing.',
+    stack: 'Python · FastAPI · PostgreSQL · React · TypeScript · DEAP · Mlxtend',
+    href: 'https://github.com/saiimonn/Chronos',
+    visual: 'chronos',
+  },
+  {
+    number: '02',
     title: 'Caledoro',
     kind: 'Offline-first mobile productivity',
     summary: 'Tasks, focus sessions, calendar tools, widgets, and AI-assisted task breakdown.',
@@ -45,22 +54,13 @@ const projects = [
     visual: 'caledoro',
   },
   {
-    number: '02',
+    number: '03',
     title: 'NitPicker',
     kind: 'PhilNITS FE preparation platform',
     summary: 'Mock exams, explanations, analytics, and previous-exam browsing.',
     stack: 'React · TypeScript · Vite · Tailwind CSS',
     href: 'https://nitpicker.dcism.org',
     visual: 'nitpicker',
-  },
-  {
-    number: '03',
-    title: 'Chronos',
-    kind: 'Automated university class scheduling',
-    summary: 'ARM-guided genetic scheduling with tested APIs and AI-assisted Jira/GitHub MCP ticketing.',
-    stack: 'Python · FastAPI · PostgreSQL · React · TypeScript · DEAP · Mlxtend',
-    href: 'https://github.com/saiimonn/Chronos',
-    visual: 'chronos',
   },
 ] as const
 

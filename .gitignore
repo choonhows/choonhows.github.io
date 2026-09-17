@@ -1,5 +1,7 @@
 node_modules/
 dist/
 graphify-out/
+resume/
+scripts/generate-cv.mjs
 *.tsbuildinfo
 .DS_Store
