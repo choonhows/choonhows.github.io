@@ -243,7 +243,7 @@ img { display: block; max-width: 100%; }
 .project-list { width: 100%; }
 .project-row {
   position: relative;
-  height: 175px;
+  min-height: 175px;
   padding: 20px 16px;
   display: grid;
   grid-template-columns: 130px minmax(0, 1fr) 24px;
@@ -271,8 +271,8 @@ img { display: block; max-width: 100%; }
 .project-details > span { color: var(--lichen); font-size: 10px; letter-spacing: .08em; }
 .project-details h3 { margin: 4px 0 0; font-size: 26px; font-weight: 600; line-height: 1.1; }
 .project-details p { margin: 1px 0 0; color: var(--muted); font-size: 15px; }
-.project-details small { display: block; max-width: 44ch; margin-top: 7px; overflow: hidden; color: var(--subtle); font-size: 11px; text-overflow: ellipsis; white-space: nowrap; }
-.project-details i { display: block; margin-top: 5px; color: oklch(50% .02 148); font-size: 9px; font-style: normal; }
+.project-details small { display: block; max-width: 55ch; margin-top: 7px; color: var(--subtle); font-size: 11px; line-height: 1.4; overflow-wrap: anywhere; white-space: normal; }
+.project-details i { display: block; margin-top: 5px; color: oklch(50% .02 148); font-size: 9px; font-style: normal; line-height: 1.4; overflow-wrap: anywhere; }
 .row-arrow { justify-self: end; color: var(--lichen); }
 
 /* Education rows */
@@ -439,7 +439,7 @@ a.contact-row:hover .contact-action svg, button.contact-row:hover .contact-actio
   .notes-section > .split-heading,
   .contact-section > .split-heading { height: 184px; font-size: clamp(44px, 14vw, 55px); line-height: .98; letter-spacing: -3px; }
 
-  .project-row { height: 155px; padding: 11px 12px; grid-template-columns: 100px minmax(0, 1fr) 18px; gap: 12px; border-radius: 10px; }
+  .project-row { min-height: 155px; padding: 11px 12px; grid-template-columns: 100px minmax(0, 1fr) 18px; gap: 12px; border-radius: 10px; }
   .project-row:hover { transform: none; }
   .project-preview { width: 100px; height: 112px; }
   .chronos-preview { padding: 10px; }
@@ -448,8 +448,8 @@ a.contact-row:hover .contact-action svg, button.contact-row:hover .contact-actio
   .project-details > span { font-size: 8px; }
   .project-details h3 { font-size: 22px; }
   .project-details p { font-size: 12px; line-height: 1.3; }
-  .project-details small { margin-top: 5px; font-size: 9px; }
-  .project-details i { display: none; }
+  .project-details small { margin-top: 5px; font-size: 11px; line-height: 1.4; }
+  .project-details i { margin-top: 6px; font-size: 9px; line-height: 1.45; }
 
   .education-row { height: 195px; padding: 20px 12px; gap: 10px; border-radius: 10px; }
   .education-row:hover { transform: none; }
@@ -488,6 +488,22 @@ a.contact-row:hover .contact-action svg, button.contact-row:hover .contact-actio
   .tools-section > .split-heading,
   .notes-section > .split-heading,
   .contact-section > .split-heading { font-size: 43px; }
+}
+
+@media (hover: none), (pointer: coarse) {
+  .profile-links { gap: 10px; }
+  .profile-links a {
+    width: 44px;
+    height: 44px;
+    border: 1px solid oklch(43% .1 143 / .22);
+    border-radius: 12px;
+    background: oklch(43% .1 143 / .08);
+    touch-action: manipulation;
+    transition: color .2s ease, background-color .2s ease, border-color .2s ease, transform .2s var(--ease);
+  }
+  .profile-links a::after { display: none; }
+  .profile-links a:hover { color: var(--moss); transform: none; }
+  .profile-links a:active { color: var(--bone); background: var(--moss); border-color: var(--moss); transform: scale(.94); }
 }
 
 @media (prefers-reduced-motion: reduce) {

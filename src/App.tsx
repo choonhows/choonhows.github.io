@@ -366,7 +366,7 @@ function App() {
 
       <footer className="site-footer">
         <div><strong>CHRISLYR JOHN P. TAN</strong><span>Computer Science · Software Development</span></div>
-        <a className="footer-note" href="https://github.com/choonhows" target="_blank" rel="noreferrer">Made by choonhows.</a>
+        <a className="footer-note" href="https://github.com/choonhows" target="_blank" rel="noreferrer">Made by choonhows</a>
         <a className="footer-top" href="#home">Back to top ↑</a>
       </footer>
     </>
