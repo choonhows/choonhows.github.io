@@ -143,8 +143,8 @@ img { display: block; max-width: 100%; }
 .profile-portrait {
   position: relative;
   width: 240px;
-  height: 240px;
-  flex: 0 0 240px;
+  height: 284px;
+  flex: 0 0 284px;
   margin: 30px auto 0;
   overflow: hidden;
   border-radius: 16px;
@@ -408,7 +408,7 @@ a.contact-row:hover .contact-action svg, button.contact-row:hover .contact-actio
     left: -83px;
     clip-path: polygon(50% 50%, 100% 50%, 100% 100%, 50% 100%);
   }
-  .profile-portrait { width: 210px; height: 210px; flex-basis: 210px; margin-top: 30px; }
+  .profile-portrait { width: calc(100% - 90px); height: 210px; flex-basis: 210px; margin-top: 30px; }
   .profile-portrait img { object-position: 64% 42%; }
   .portrait-badge { left: 5px; bottom: -1px; }
   .profile-copy { padding: 22px 24px 24px; }
@@ -480,6 +480,7 @@ a.contact-row:hover .contact-action svg, button.contact-row:hover .contact-actio
 
 @media (max-width: 360px) {
   .portfolio-shell { width: calc(100% - 24px); }
+  .profile-portrait { width: calc(100% - 64px); }
   .profile-copy h1 { font-size: 28px; }
   .hero-section .split-heading,
   .projects-section > .split-heading,
