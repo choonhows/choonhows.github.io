@@ -1,6 +1,8 @@
 node_modules/
 dist/
 graphify-out/
+DESIGN.md
+PRODUCT.md
 resume/
 scripts/generate-cv.mjs
 *.tsbuildinfo
