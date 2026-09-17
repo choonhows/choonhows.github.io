@@ -3,6 +3,7 @@ dist/
 graphify-out/
 DESIGN.md
 PRODUCT.md
+WORKFLOW.md
 resume/
 scripts/generate-cv.mjs
 *.tsbuildinfo
