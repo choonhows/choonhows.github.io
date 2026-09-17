@@ -495,15 +495,12 @@ a.contact-row:hover .contact-action svg, button.contact-row:hover .contact-actio
   .profile-links a {
     width: 44px;
     height: 44px;
-    border: 1px solid oklch(43% .1 143 / .22);
-    border-radius: 12px;
-    background: oklch(43% .1 143 / .08);
     touch-action: manipulation;
-    transition: color .2s ease, background-color .2s ease, border-color .2s ease, transform .2s var(--ease);
+    transition: color .2s ease, transform .2s var(--ease);
   }
   .profile-links a::after { display: none; }
   .profile-links a:hover { color: var(--moss); transform: none; }
-  .profile-links a:active { color: var(--bone); background: var(--moss); border-color: var(--moss); transform: scale(.94); }
+  .profile-links a:active { color: var(--forest-ink); transform: scale(.9); }
 }
 
 @media (prefers-reduced-motion: reduce) {
