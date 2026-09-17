@@ -1,0 +1,131 @@
+\documentclass[10pt,letterpaper]{article}
+
+\usepackage[T1]{fontenc}
+\usepackage{mathptmx}
+\usepackage[letterpaper,left=0.55in,right=0.55in,top=0.35in,bottom=0.35in]{geometry}
+\usepackage{array}
+\usepackage{tabularx}
+\usepackage[hidelinks]{hyperref}
+
+\input{glyphtounicode}
+\pdfgentounicode=1
+
+\hypersetup{
+  pdftitle={Chrislyr John P. Tan - Curriculum Vitae},
+  pdfauthor={Chrislyr John P. Tan},
+  pdfsubject={Curriculum Vitae}
+}
+
+\pagestyle{empty}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0pt}
+\setlength{\tabcolsep}{0pt}
+\renewcommand{\arraystretch}{1}
+\linespread{0.97}
+\urlstyle{same}
+
+\newenvironment{cvitems}{%
+  \begin{list}{\textbullet}{%
+    \setlength{\leftmargin}{1.25em}%
+    \setlength{\labelsep}{0.45em}%
+    \setlength{\itemsep}{0pt}%
+    \setlength{\topsep}{1.5pt}%
+    \setlength{\parsep}{0pt}%
+    \setlength{\partopsep}{0pt}%
+  }%
+}{\end{list}}
+
+\newcommand{\cvsection}[1]{%
+  \vspace{7pt}%
+  {\fontsize{12}{13}\selectfont\bfseries\MakeUppercase{#1}}\par
+  \vspace{2pt}\hrule height 0.4pt\vspace{4pt}%
+}
+
+\newcommand{\headingrow}[2]{%
+  \begin{tabularx}{\textwidth}{@{}>{\raggedright\arraybackslash}Xr@{}}
+    \textbf{#1} & \textbf{#2}
+  \end{tabularx}%
+}
+
+\newcommand{\subheadingrow}[2]{%
+  \begin{tabularx}{\textwidth}{@{}>{\raggedright\arraybackslash}Xr@{}}
+    \textit{#1} & #2
+  \end{tabularx}%
+}
+
+\newcommand{\projectheading}[3]{%
+  \begin{tabularx}{\textwidth}{@{}>{\raggedright\arraybackslash}Xr@{}}
+    \textbf{#1} \textbar{} \textit{#2} & \textbf{#3}
+  \end{tabularx}%
+}
+
+\begin{document}
+
+\begin{center}
+  {\fontsize{20}{22}\selectfont\bfseries CHRISLYR JOHN P. TAN}\par
+  \vspace{1pt}
+  {\fontsize{10}{11}\selectfont
+    Cebu City, Philippines \textbar{} +63 932 423 0938 \textbar{}
+    \href{mailto:cjtan2406@gmail.com}{cjtan2406@gmail.com} \textbar{}
+    \href{https://github.com/choonhows}{github.com/choonhows}}
+\end{center}
+\vspace{-4pt}
+
+\cvsection{Education}
+\headingrow{University of San Carlos}{Cebu City, Philippines}
+\subheadingrow{Bachelor of Science in Computer Science}{2024--Present}
+\begin{cvitems}
+  \item Third-year undergraduate student; expected graduation: 2027.
+\end{cvitems}
+\vspace{1pt}
+\headingrow{University of San Jose-Recoletos}{Cebu City, Philippines}
+\subheadingrow{Technical-Vocational-Livelihood (TVL), Information and Communication Technology}{2022--2024}
+
+\cvsection{Certification}
+\headingrow{PhilNITS Fundamental Information Technology Engineers (FE) Certification Examination}{April 2026}
+Passer
+
+\cvsection{Projects}
+\projectheading{Caledoro}{Flutter, Dart, Riverpod, Hive, Gemini API}{2026}
+\href{https://github.com/choonhows/Caledoro}{github.com/choonhows/Caledoro}
+\begin{cvitems}
+  \item Collaborated as one of three developers on an offline-first productivity application featuring task management, Pomodoro sessions, calendar tools, and Android home-screen widgets.
+  \item Integrated the Gemini API to analyze user-created tasks and generate smaller, actionable subtasks, helping users break down complex tasks into manageable steps.
+  \item Contributed to feature implementation, debugging, quality assurance, local data persistence, state management, notifications, and responsive application behavior.
+  \item Performed detailed testing and iterative refinement to improve reliability, usability, and overall user experience.
+\end{cvitems}
+\vspace{2pt}
+
+\projectheading{NitPicker}{React, TypeScript, Vite, Tailwind CSS}{2026}
+\href{https://github.com/choonhows/NitPicker}{github.com/choonhows/NitPicker}
+\begin{cvitems}
+  \item Contributed to a PhilNITS FE preparation platform with configurable mock exams, answer explanations, performance analytics, and previous-exam browsing.
+  \item Implemented UI refinements including skeleton loading states and quality-of-life improvements for smoother user interaction.
+  \item Conducted functional, interactivity, and usability testing and collaborated on responsiveness and workflow refinements.
+\end{cvitems}
+\vspace{2pt}
+
+\projectheading{Chronos}{Python, FastAPI, PostgreSQL, React, TypeScript, DEAP, Mlxtend}{2026--Present}
+\href{https://github.com/saiimonn/Chronos}{github.com/saiimonn/Chronos}
+\begin{cvitems}
+  \item Collaborated as one of four developers on a locally hosted automated class scheduling system that uses Association Rule Mining to guide a Genetic Algorithm while keeping hard constraints authoritative.
+  \item Implemented FastAPI and SQLAlchemy services and React/TypeScript workflows for authentication and role-based access control, scheduling, validation, persistence, timetable projection, and CSV/XLSX export.
+  \item Built unit and PostgreSQL integration tests for migrations, APIs, scheduling algorithms, and persistence.
+  \item Designed and operationalized a Jira-GitHub ticketing workflow with dual-ID traceability and AI-assisted MCP commands for ticket intake, branch creation, pull-request review, CI checks, and issue completion to streamline team delivery.
+\end{cvitems}
+
+\cvsection{Technical Skills}
+\textbf{Programming Languages:} Dart, TypeScript, C\#, Python, SQL\par
+\textbf{Frameworks \& Technologies:} Flutter, React, Vite, Tailwind CSS, .NET MAUI, FastAPI, SQLAlchemy, PostgreSQL, DEAP, Mlxtend\par
+\textbf{Development Tools:} Git, GitHub, Visual Studio Code, Jira, Docker, Supabase\par
+\textbf{Mobile \& Web Development:} Responsive UI development, local data persistence, state management, debugging, quality assurance, REST APIs\par
+\textbf{AI-Assisted Development:} OpenCode, npx-based skills workflows, AI prompting, loop engineering, prompt engineering, context management, token-efficient prompting, Jira/GitHub MCP workflows\par
+\textbf{Software Quality:} Functional testing, UI testing, debugging, usability review, code refinement, Pytest, Vitest, integration testing
+
+\cvsection{Core Competencies}
+Problem Solving \enspace\textbullet\enspace Critical Thinking \enspace\textbullet\enspace Attention to Detail
+\enspace\textbullet\enspace Team Collaboration \enspace\textbullet\enspace Adaptability
+\enspace\textbullet\enspace Continuous Learning\\
+\textbullet\enspace Technical Communication \enspace\textbullet\enspace Time Management
+
+\end{document}

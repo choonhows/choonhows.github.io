@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <rect width="1200" height="630" fill="#0b1712"/>
+  <path d="M40 40h1120v550H40z" fill="none" stroke="#22382e"/>
+  <text x="72" y="105" fill="#add66f" font-family="Arial,sans-serif" font-size="25" letter-spacing="5">CHOONHOW / PORTFOLIO</text>
+  <text x="70" y="305" fill="#f2efe4" font-family="Arial,sans-serif" font-weight="700" font-size="116" letter-spacing="-6">SOFTWARE</text>
+  <text x="70" y="415" fill="#284436" font-family="Arial,sans-serif" font-weight="700" font-size="116" letter-spacing="-6">DEVELOPER</text>
+  <text x="74" y="535" fill="#96a49b" font-family="monospace" font-size="22">COMPUTER SCIENCE · CEBU CITY, PHILIPPINES</text>
+</svg>
