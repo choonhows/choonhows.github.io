@@ -221,11 +221,24 @@ img { display: block; max-width: 100%; }
 .hero-card h3 { position: relative; z-index: 2; max-width: 12ch; margin: auto 0 0; font-size: 24px; font-weight: 500; line-height: 1.08; letter-spacing: -.5px; }
 .hero-card > span { position: absolute; z-index: 3; right: 20px; bottom: 20px; width: 34px; height: 34px; display: grid; place-items: center; border: 1px solid currentColor; border-radius: 7px; transition: transform .35s var(--ease); }
 .hero-card:hover > span { transform: translateX(4px); }
-.hero-card::before { content: ''; position: absolute; inset: 0; opacity: .28; pointer-events: none; }
+.hero-card::before { content: ''; position: absolute; pointer-events: none; }
 .hero-card-lichen { color: var(--forest-ink); background: var(--lichen); }
-.hero-card-lichen::before { width: 260px; height: 175px; top: 15px; left: 165px; border: 5px solid oklch(54% .11 137); border-radius: 45% 55% 50% 45%; transform: rotate(-8deg); box-shadow: -28px 85px 0 -3px transparent, -28px 85px 0 2px oklch(54% .11 137); }
+.hero-card-lichen::before {
+  top: 48px;
+  right: -22px;
+  width: 252px;
+  height: 58px;
+  opacity: .42;
+  background: oklch(43% .1 143);
+  clip-path: polygon(0 50%, 12.5% 0, 25% 50%, 37.5% 0, 50% 50%, 62.5% 0, 75% 50%, 87.5% 0, 100% 50%, 100% 57%, 87.5% 7%, 75% 57%, 62.5% 7%, 50% 57%, 37.5% 7%, 25% 57%, 12.5% 7%, 0 57%);
+  transform: rotate(-4deg);
+}
 .hero-card-sand { color: var(--forest-ink); background: var(--sand); }
-.hero-card-sand::before { inset: -70px -10px; border: 5px solid oklch(66% .07 125); transform: rotate(38deg); box-shadow: 90px -25px 0 -5px var(--sand), 90px -25px 0 0 oklch(66% .07 125), 180px -50px 0 -5px var(--sand), 180px -50px 0 0 oklch(66% .07 125); }
+.hero-card-sand::before {
+  inset: -28px -18px -28px 42%;
+  opacity: .4;
+  background: repeating-linear-gradient(135deg, transparent 0 24px, oklch(58% .06 125) 24px 26px, transparent 26px 50px);
+}
 
 /* Shared section pacing */
 .projects-section { min-height: 845px; margin-top: -20px; }

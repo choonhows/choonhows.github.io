@@ -268,13 +268,13 @@ function App() {
 
             <div className="hero-cards reveal">
               <a className="hero-card hero-card-lichen" href="#projects">
-                <MonitorSmartphone size={34} strokeWidth={1.8} />
-                <h3>MOBILE DEVELOPMENT, OFFLINE-FIRST SOFTWARE</h3>
+                <FolderKanban size={34} strokeWidth={1.8} />
+                <h3>CHRONOS, AUTOMATED UNIVERSITY SCHEDULING</h3>
                 <span><ArrowRight size={20} /></span>
               </a>
-              <a className="hero-card hero-card-sand" href="#tools">
+              <a className="hero-card hero-card-sand" href="#projects">
                 <Code2 size={34} strokeWidth={1.8} />
-                <h3>REACT, TYPESCRIPT, FASTAPI, TESTING</h3>
+                <h3>FASTAPI, REACT, POSTGRESQL, GENETIC SCHEDULING</h3>
                 <span><ArrowRight size={20} /></span>
               </a>
             </div>
