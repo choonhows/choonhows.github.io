@@ -23,6 +23,8 @@ import {
 } from 'lucide-react'
 
 const assetPath = (fileName: string) => `${import.meta.env.BASE_URL}${fileName}`
+const githubAvatarUrl = 'https://avatars.githubusercontent.com/u/125168781?s=800'
+const avatarRefreshInterval = 5 * 60 * 1000
 
 const navItems = [
   { id: 'home', label: 'Home', icon: Home },
@@ -149,11 +151,54 @@ function ProjectPreview({ visual, title }: { visual: (typeof projects)[number]['
 
 function App() {
   const [active, setActive] = useState<NavItem>('home')
+  const [avatarSrc, setAvatarSrc] = useState(() => assetPath('profile.jpg'))
   const [copyStatus, setCopyStatus] = useState<'idle' | 'copied' | 'failed'>('idle')
 
   useEffect(() => {
+    let disposed = false
+    let objectUrl: string | null = null
+
+    const refreshAvatar = async () => {
+      try {
+        const response = await fetch(`${githubAvatarUrl}&refresh=${Date.now()}`, {
+          cache: 'no-store',
+          headers: { Accept: 'image/*' },
+          signal: AbortSignal.timeout(5_000),
+        })
+
+        if (!response.ok || !response.headers.get('content-type')?.startsWith('image/')) return
+
+        const nextObjectUrl = URL.createObjectURL(await response.blob())
+        if (disposed) {
+          URL.revokeObjectURL(nextObjectUrl)
+          return
+        }
+
+        if (objectUrl) URL.revokeObjectURL(objectUrl)
+        objectUrl = nextObjectUrl
+        setAvatarSrc(nextObjectUrl)
+      } catch {
+        // Keep the local avatar when GitHub is unavailable.
+      }
+    }
+
+    refreshAvatar()
+    const interval = window.setInterval(refreshAvatar, avatarRefreshInterval)
+
+    return () => {
+      disposed = true
+      window.clearInterval(interval)
+      if (objectUrl) URL.revokeObjectURL(objectUrl)
+    }
+  }, [])
+
+  useEffect(() => {
     const lenis = new Lenis({
-      anchors: { offset: -90 },
+      anchors: {
+        offset: -90,
+        duration: 0.7,
+        easing: (time) => 1 - Math.pow(1 - time, 4),
+      },
       autoRaf: true,
       respectReducedMotion: true,
       stopInertiaOnNavigate: true,
@@ -239,7 +284,14 @@ function App() {
         <aside className="profile-column">
           <article className="profile-card">
             <div className="profile-portrait">
-              <img src={assetPath('profile.jpg')} alt="Chrislyr John P. Tan working at a laptop" />
+              <img
+                src={avatarSrc}
+                alt="Portrait of Chrislyr John P. Tan"
+                onError={(event) => {
+                  event.currentTarget.onerror = null
+                  event.currentTarget.src = assetPath('profile.jpg')
+                }}
+              />
               <span className="portrait-badge"><Code2 size={16} /></span>
             </div>
             <div className="profile-copy">

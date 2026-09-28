@@ -3,7 +3,7 @@ import { readFile, rename, rm, writeFile } from 'node:fs/promises'
 import { dirname, resolve } from 'node:path'
 import { fileURLToPath } from 'node:url'
 
-const avatarUrl = 'https://github.com/choonhows.png?size=800'
+const avatarUrl = 'https://avatars.githubusercontent.com/u/125168781?s=800'
 const projectRoot = resolve(dirname(fileURLToPath(import.meta.url)), '..')
 const avatarPath = resolve(projectRoot, 'public/profile.jpg')
 const temporaryPath = `${avatarPath}.tmp`
@@ -20,7 +20,8 @@ async function readCurrentAvatar() {
 }
 
 async function downloadAvatar() {
-  const response = await fetch(avatarUrl, {
+  const response = await fetch(`${avatarUrl}&refresh=${Date.now()}`, {
+    cache: 'no-store',
     headers: {
       Accept: 'image/*',
       'User-Agent': 'chrislyr-portfolio-avatar-sync',
