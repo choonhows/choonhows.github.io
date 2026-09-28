@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState, type MouseEvent } from 'react'
 import Lenis from 'lenis'
 import {
   ArrowRight,
@@ -153,6 +153,7 @@ function App() {
   const [active, setActive] = useState<NavItem>('home')
   const [avatarSrc, setAvatarSrc] = useState(() => assetPath('profile.jpg'))
   const [copyStatus, setCopyStatus] = useState<'idle' | 'copied' | 'failed'>('idle')
+  const lenisRef = useRef<Lenis | null>(null)
 
   useEffect(() => {
     let disposed = false
@@ -194,18 +195,39 @@ function App() {
 
   useEffect(() => {
     const lenis = new Lenis({
-      anchors: {
-        offset: -90,
-        duration: 0.7,
-        easing: (time) => 1 - Math.pow(1 - time, 4),
-      },
       autoRaf: true,
       respectReducedMotion: true,
       stopInertiaOnNavigate: true,
     })
+    lenisRef.current = lenis
 
-    return () => lenis.destroy()
+    return () => {
+      lenisRef.current = null
+      lenis.destroy()
+    }
   }, [])
+
+  const scrollToSection = (event: MouseEvent<HTMLAnchorElement>, id: NavItem) => {
+    if (event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return
+
+    const target = document.getElementById(id)
+    if (!target) return
+
+    event.preventDefault()
+    setActive(id)
+    if (lenisRef.current) {
+      lenisRef.current.scrollTo(target, {
+        offset: -90,
+        duration: 0.7,
+        easing: (time) => 1 - Math.pow(1 - time, 4),
+      })
+    } else {
+      target.scrollIntoView()
+    }
+
+    const hash = `#${id}`
+    if (window.location.hash !== hash) window.history.pushState(null, '', hash)
+  }
 
   useEffect(() => {
     const sections = navItems
@@ -273,7 +295,7 @@ function App() {
       <header className="site-header">
         <nav aria-label="Primary navigation">
           {navItems.map(({ id, label, icon: Icon }) => (
-            <a href={`#${id}`} className={active === id ? 'active' : ''} aria-current={active === id ? 'page' : undefined} aria-label={label} data-label={label} key={id}>
+            <a href={`#${id}`} onClick={(event) => scrollToSection(event, id)} className={active === id ? 'active' : ''} aria-current={active === id ? 'page' : undefined} aria-label={label} data-label={label} key={id}>
               <Icon size={21} strokeWidth={1.9} />
             </a>
           ))}
@@ -302,7 +324,7 @@ function App() {
                 <a href="https://github.com/choonhows" target="_blank" rel="noreferrer" aria-label="GitHub" data-label="GitHub"><GitBranch size={21} /></a>
                 <a href="mailto:cjtan2406@gmail.com" aria-label="Email" data-label="Email"><Mail size={21} /></a>
                 <a href={assetPath('Chrislyr-John-Tan-CV.pdf')} download aria-label="Download CV" data-label="Download CV"><Download size={21} /></a>
-                <a href="#projects" aria-label="View projects" data-label="Projects"><FolderKanban size={21} /></a>
+                <a href="#projects" onClick={(event) => scrollToSection(event, 'projects')} aria-label="View projects" data-label="Projects"><FolderKanban size={21} /></a>
               </div>
             </div>
           </article>
@@ -319,12 +341,12 @@ function App() {
             </div>
 
             <div className="hero-cards reveal">
-              <a className="hero-card hero-card-lichen" href="#projects">
+              <a className="hero-card hero-card-lichen" href="#projects" onClick={(event) => scrollToSection(event, 'projects')}>
                 <FolderKanban size={34} strokeWidth={1.8} />
                 <h3>CHRONOS, AUTOMATED UNIVERSITY SCHEDULING</h3>
                 <span><ArrowRight size={20} /></span>
               </a>
-              <a className="hero-card hero-card-sand" href="#projects">
+              <a className="hero-card hero-card-sand" href="#projects" onClick={(event) => scrollToSection(event, 'projects')}>
                 <Code2 size={34} strokeWidth={1.8} />
                 <h3>FASTAPI, REACT, POSTGRESQL, GENETIC SCHEDULING</h3>
                 <span><ArrowRight size={20} /></span>
@@ -419,7 +441,7 @@ function App() {
       <footer className="site-footer">
         <div><strong>CHRISLYR JOHN P. TAN</strong><span>Computer Science · Software Development</span></div>
         <a className="footer-note" href="https://github.com/choonhows" target="_blank" rel="noreferrer">Made by choonhows</a>
-        <a className="footer-top" href="#home">Back to top ↑</a>
+        <a className="footer-top" href="#home" onClick={(event) => scrollToSection(event, 'home')}>Back to top ↑</a>
       </footer>
     </>
   )

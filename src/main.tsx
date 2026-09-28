@@ -27,7 +27,7 @@ const revealSite = () => {
       document.documentElement.classList.add('site-ready')
       document.getElementById('site-loader')?.setAttribute('aria-hidden', 'true')
 
-      window.setTimeout(() => document.getElementById('site-loader')?.remove(), prefersReducedMotion ? 0 : 450)
+      window.setTimeout(() => document.getElementById('site-loader')?.remove(), prefersReducedMotion ? 0 : 600)
     })
   }, remainingDuration)
 }
