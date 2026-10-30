@@ -48,6 +48,15 @@ const projects = [
   },
   {
     number: '02',
+    title: 'Bored',
+    kind: 'Collaborative short-break game collection',
+    summary: 'Built Color, Shape, and Pattern with daily challenges, local progress, accessible controls, tests, and CI/CD.',
+    stack: 'Next.js · React · TypeScript · Tailwind CSS · Node.js',
+    href: 'https://bored.dcism.org',
+    visual: 'bored',
+  },
+  {
+    number: '03',
     title: 'Caledoro',
     kind: 'Offline-first mobile productivity',
     summary: 'Tasks, focus sessions, calendar tools, widgets, and AI-assisted task breakdown.',
@@ -56,7 +65,7 @@ const projects = [
     visual: 'caledoro',
   },
   {
-    number: '03',
+    number: '04',
     title: 'NitPicker',
     kind: 'PhilNITS FE preparation platform',
     summary: 'Mock exams, explanations, analytics, and previous-exam browsing.',
@@ -138,10 +147,16 @@ function ProjectPreview({ visual, title }: { visual: (typeof projects)[number]['
     )
   }
 
+  const previewAssets = {
+    bored: 'bored-logo.svg',
+    caledoro: 'caledoro-logo.png',
+    nitpicker: 'nitpicker-logo.svg',
+  } as const
+
   return (
     <div className={`project-preview ${visual}-preview`}>
       <img
-        src={assetPath(visual === 'caledoro' ? 'caledoro-logo.png' : 'nitpicker-logo.svg')}
+        src={assetPath(previewAssets[visual])}
         alt={`${title} logo`}
         loading="lazy"
       />
@@ -336,7 +351,7 @@ function App() {
             <p className="hero-intro">I turn ideas into reliable mobile and web systems, from offline-first applications to tested APIs and automated scheduling workflows.</p>
 
             <div className="hero-stats reveal" aria-label="Portfolio highlights">
-              <div><strong>03</strong><span>FEATURED<br />PROJECTS</span></div>
+              <div><strong>04</strong><span>FEATURED<br />PROJECTS</span></div>
               <div><strong>2027</strong><span>EXPECTED<br />GRADUATION</span></div>
             </div>
 

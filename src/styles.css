@@ -273,6 +273,8 @@ img { display: block; max-width: 100%; }
 .caledoro-preview img { width: 100%; height: 100%; object-fit: cover; }
 .nitpicker-preview { background: linear-gradient(145deg, #22142f, #7031b5); }
 .nitpicker-preview img { width: 82%; height: 82%; object-fit: contain; }
+.bored-preview { background: #a5dfeb; }
+.bored-preview img { width: 100%; height: 100%; object-fit: cover; image-rendering: pixelated; }
 .chronos-preview { padding: 16px; place-items: center start; color: #191c1e; background: #f2f4f6; border: 1px solid #c2c6d6; }
 .chronos-brand { display: flex; flex-direction: column; align-items: flex-start; transition: transform .45s var(--ease); }
 .chronos-brand strong { font-family: 'Space Grotesk', 'Poppins', sans-serif; font-size: 24px; font-weight: 700; line-height: 1; letter-spacing: -.04em; }
