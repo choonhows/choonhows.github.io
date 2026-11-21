@@ -5,6 +5,8 @@ import {
   ArrowUpRight,
   BriefcaseBusiness,
   Check,
+  ChevronLeft,
+  ChevronRight,
   Code2,
   Copy,
   Database,
@@ -46,7 +48,7 @@ type Project = {
   role: string
   stack: string
   visual: 'chronos' | 'bored' | 'caledoro' | 'nitpicker'
-  screenshot: string | null
+  screenshots: string[]
   links: { label: string; href: string }[]
 }
 
@@ -60,7 +62,7 @@ const projects: Project[] = [
     role: 'One of four developers. I built FastAPI and SQLAlchemy services and React workflows for sign-in, role-based access, scheduling, validation, timetable views, and CSV/XLSX export. I wrote unit and PostgreSQL integration tests and designed the Jira–GitHub workflow with AI-assisted MCP commands.',
     stack: 'Python · FastAPI · PostgreSQL · React · TypeScript · DEAP · Mlxtend',
     visual: 'chronos',
-    screenshot: null,
+    screenshots: [],
     links: [{ label: 'View repository', href: 'https://github.com/saiimonn/Chronos' }],
   },
   {
@@ -72,7 +74,7 @@ const projects: Project[] = [
     role: 'I built the Color, Shape, and Pattern daily games: deterministic daily challenges, saved first results, local progress, and keyboard and pointer controls. I also added game and persistence tests, CI/CD deployment checks, and security dependency patches.',
     stack: 'Next.js · React · TypeScript · Tailwind CSS · Node.js',
     visual: 'bored',
-    screenshot: 'bored-screenshot.webp',
+    screenshots: ['projects/bored-1.webp', 'projects/bored-2.webp', 'projects/bored-3.webp', 'projects/bored-4.webp'],
     links: [{ label: 'Visit live site', href: 'https://bored.dcism.org' }],
   },
   {
@@ -84,7 +86,7 @@ const projects: Project[] = [
     role: 'One of three developers. I integrated the Gemini API for task breakdown and worked on local storage, state management, notifications, testing, debugging, and responsive layouts.',
     stack: 'Flutter · Dart · Riverpod · Hive · Gemini API',
     visual: 'caledoro',
-    screenshot: null,
+    screenshots: [],
     links: [{ label: 'View repository', href: 'https://github.com/choonhows/Caledoro' }],
   },
   {
@@ -96,7 +98,7 @@ const projects: Project[] = [
     role: 'Contributor. I built skeleton loading states and workflow refinements, and ran functional, interaction, usability, and responsive testing.',
     stack: 'React · TypeScript · Vite · Tailwind CSS',
     visual: 'nitpicker',
-    screenshot: 'nitpicker-screenshot.webp',
+    screenshots: ['projects/nitpicker-1.webp', 'projects/nitpicker-2.webp', 'projects/nitpicker-3.webp', 'projects/nitpicker-4.webp'],
     links: [
       { label: 'Visit live site', href: 'https://nitpicker.dcism.org' },
       { label: 'View repository', href: 'https://github.com/choonhows/NitPicker' },
@@ -212,6 +214,74 @@ function ProjectPreview({ visual, title }: { visual: Project['visual']; title: s
   )
 }
 
+function Gallery({ title, images }: { title: string; images: string[] }) {
+  const trackRef = useRef<HTMLDivElement>(null)
+  const [index, setIndex] = useState(0)
+
+  const go = (next: number) => {
+    const track = trackRef.current
+    if (!track) return
+    const target = Math.max(0, Math.min(images.length - 1, next))
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    track.scrollTo({ left: target * track.clientWidth, behavior: reduceMotion ? 'auto' : 'smooth' })
+  }
+
+  return (
+    <div
+      className="dialog-media gallery"
+      role="group"
+      aria-roledescription="carousel"
+      aria-label={`${title} screenshots`}
+      onKeyDown={(event) => {
+        if (event.key === 'ArrowRight') { event.preventDefault(); go(index + 1) }
+        if (event.key === 'ArrowLeft') { event.preventDefault(); go(index - 1) }
+      }}
+    >
+      <div
+        className="gallery-track"
+        ref={trackRef}
+        tabIndex={0}
+        aria-label={`Screenshot ${index + 1} of ${images.length}. Use arrow keys or swipe to see more.`}
+        onScroll={(event) => {
+          const track = event.currentTarget
+          setIndex(Math.round(track.scrollLeft / track.clientWidth))
+        }}
+      >
+        {images.map((src, imageIndex) => (
+          <img
+            src={assetPath(src)}
+            alt={`${title} screenshot ${imageIndex + 1} of ${images.length}`}
+            loading={imageIndex === 0 ? 'eager' : 'lazy'}
+            key={src}
+          />
+        ))}
+      </div>
+      {images.length > 1 && (
+        <>
+          <button type="button" className="gallery-nav is-prev" onClick={() => go(index - 1)} disabled={index === 0} aria-label="Previous screenshot">
+            <ChevronLeft size={22} />
+          </button>
+          <button type="button" className="gallery-nav is-next" onClick={() => go(index + 1)} disabled={index === images.length - 1} aria-label="Next screenshot">
+            <ChevronRight size={22} />
+          </button>
+          <div className="gallery-dots">
+            {images.map((src, imageIndex) => (
+              <button
+                type="button"
+                className={imageIndex === index ? 'is-active' : undefined}
+                onClick={() => go(imageIndex)}
+                aria-label={`Show screenshot ${imageIndex + 1}`}
+                aria-current={imageIndex === index}
+                key={src}
+              />
+            ))}
+          </div>
+        </>
+      )}
+    </div>
+  )
+}
+
 function ProjectDialog({ project, onClose }: { project: Project | null; onClose: () => void }) {
   const dialogRef = useRef<HTMLDialogElement>(null)
 
@@ -238,13 +308,13 @@ function ProjectDialog({ project, onClose }: { project: Project | null; onClose:
           <button type="button" className="dialog-close" onClick={onClose} aria-label="Close project details">
             <X size={20} />
           </button>
-          <div className="dialog-media">
-            {project.screenshot ? (
-              <img src={assetPath(project.screenshot)} alt={`Screenshot of ${project.title}`} />
-            ) : (
+          {project.screenshots.length > 0 ? (
+            <Gallery key={project.title} title={project.title} images={project.screenshots} />
+          ) : (
+            <div className="dialog-media">
               <ProjectPreview visual={project.visual} title={project.title} />
-            )}
-          </div>
+            </div>
+          )}
           <div className="dialog-body">
             <span className="dialog-eyebrow">PROJECT / {project.number}</span>
             <h2 id="project-dialog-title">{project.title}</h2>
