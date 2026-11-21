@@ -259,7 +259,7 @@ img { display: block; max-width: 100%; }
   min-height: 175px;
   padding: 20px 16px;
   display: grid;
-  grid-template-columns: 130px minmax(0, 1fr) 24px;
+  grid-template-columns: 184px minmax(0, 1fr) 24px;
   gap: 20px;
   align-items: center;
   border-radius: 16px;
@@ -267,10 +267,12 @@ img { display: block; max-width: 100%; }
 }
 
 .project-row:hover { background: var(--surface); transform: translateX(5px); }
-.project-preview { position: relative; width: 130px; height: 135px; overflow: hidden; display: grid; place-items: center; border-radius: 8px; }
+.project-preview { position: relative; width: 184px; height: 115px; overflow: hidden; display: grid; place-items: center; border-radius: 8px; }
 .project-preview img { transition: transform .45s var(--ease); }
 .caledoro-preview { background: #fff; }
-.caledoro-preview img { width: 100%; height: 100%; object-fit: cover; }
+.caledoro-preview img { width: 100%; height: 100%; object-fit: contain; }
+.shot-preview { background: #fff; outline: 1px solid oklch(100% 0 0 / .08); }
+.shot-preview img { width: 100%; height: 100%; object-fit: cover; object-position: top; }
 .nitpicker-preview { background: linear-gradient(145deg, #22142f, #7031b5); }
 .nitpicker-preview img { width: 82%; height: 82%; object-fit: contain; }
 .bored-preview { background: #a5dfeb; }
@@ -452,12 +454,12 @@ a.contact-row:hover .contact-action svg, button.contact-row:hover .contact-actio
   .notes-section > .split-heading,
   .contact-section > .split-heading { height: 184px; font-size: clamp(44px, 14vw, 55px); line-height: .98; letter-spacing: -3px; }
 
-  .project-row { min-height: 155px; padding: 14px 12px; grid-template-columns: 76px minmax(0, 1fr) 18px; gap: 14px; align-items: start; border-radius: 10px; }
+  .project-row { min-height: 155px; padding: 14px 12px; grid-template-columns: minmax(0, 1fr) 18px; gap: 14px; align-items: start; border-radius: 10px; }
   .project-row:hover { transform: none; }
-  .project-preview { width: 76px; height: 80px; }
-  .chronos-preview { padding: 6px; }
-  .chronos-brand strong { font-size: 14px; }
-  .chronos-brand small { margin-top: 4px; font-size: 5px; }
+  .project-preview { grid-column: 1 / -1; width: 100%; height: auto; aspect-ratio: 16 / 10; }
+  .chronos-preview { padding: 20px; place-items: center; }
+  .chronos-brand strong { font-size: 30px; }
+  .chronos-brand small { margin-top: 6px; font-size: 8px; }
   .project-details > span { font-size: 11px; }
   .project-details h3 { font-size: 22px; }
   .project-details p { font-size: 15px; line-height: 1.3; }

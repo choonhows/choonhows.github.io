@@ -29,7 +29,7 @@ const avatarRefreshInterval = 5 * 60 * 1000
 const navItems = [
   { id: 'home', label: 'Home', icon: Home },
   { id: 'projects', label: 'Projects', icon: FolderKanban },
-  { id: 'about', label: 'Education', icon: BriefcaseBusiness },
+  { id: 'about', label: 'Experience', icon: BriefcaseBusiness },
   { id: 'tools', label: 'Tools', icon: Wrench },
   { id: 'contact', label: 'Contact', icon: PencilLine },
 ] as const
@@ -41,41 +41,52 @@ const projects = [
     number: '01',
     title: 'Chronos',
     kind: 'Automated university class scheduling',
-    summary: 'ARM-guided genetic scheduling with tested APIs and AI-assisted Jira/GitHub MCP ticketing.',
+    summary: 'One of four developers. I built FastAPI services, role-based access, scheduling and export workflows, PostgreSQL integration tests, and the Jira–GitHub workflow.',
     stack: 'Python · FastAPI · PostgreSQL · React · TypeScript · DEAP · Mlxtend',
     href: 'https://github.com/saiimonn/Chronos',
     visual: 'chronos',
+    screenshot: null,
   },
   {
     number: '02',
     title: 'Bored',
     kind: 'Collaborative short-break game collection',
-    summary: 'Built Color, Shape, and Pattern with daily challenges, local progress, accessible controls, tests, and CI/CD.',
+    summary: 'I built the Color, Shape, and Pattern daily games, plus their tests and the CI/CD deployment checks.',
     stack: 'Next.js · React · TypeScript · Tailwind CSS · Node.js',
     href: 'https://bored.dcism.org',
     visual: 'bored',
+    screenshot: 'bored-screenshot.webp',
   },
   {
     number: '03',
     title: 'Caledoro',
     kind: 'Offline-first mobile productivity',
-    summary: 'Tasks, focus sessions, calendar tools, widgets, and AI-assisted task breakdown.',
+    summary: 'One of three developers. I integrated Gemini task breakdown and worked on local storage, state, notifications, and testing.',
     stack: 'Flutter · Dart · Riverpod · Hive · Gemini API',
     href: 'https://github.com/choonhows/Caledoro',
     visual: 'caledoro',
+    screenshot: null,
   },
   {
     number: '04',
     title: 'NitPicker',
     kind: 'PhilNITS FE preparation platform',
-    summary: 'Mock exams, explanations, analytics, and previous-exam browsing.',
+    summary: 'Contributor. I built skeleton loading and workflow fixes, and ran functional, usability, and responsive testing.',
     stack: 'React · TypeScript · Vite · Tailwind CSS',
     href: 'https://nitpicker.dcism.org',
     visual: 'nitpicker',
+    screenshot: 'nitpicker-screenshot.webp',
   },
 ] as const
 
 const education = [
+  {
+    date: 'NOV 2026',
+    label: 'Experience · 3 days',
+    title: 'iOS QA Tester',
+    place: 'HagWOW',
+    description: 'Tested a Philippine Grades 1–12 learning app on iPhone and filed structured bug reports with reproduction steps, expected and actual results, severity, and evidence.',
+  },
   {
     date: 'APR 2026',
     label: 'Certification',
@@ -126,6 +137,18 @@ const workingNotes = [
   },
 ] as const
 
+const linkedinUrl = 'https://www.linkedin.com/in/chrislyr-tan/'
+
+function LinkedinIcon({ size = 21 }: { size?: number }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.9} strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+      <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-4 0v7h-4v-7a6 6 0 0 1 6-6z" />
+      <rect width="4" height="12" x="2" y="9" />
+      <circle cx="4" cy="4" r="2" />
+    </svg>
+  )
+}
+
 function SplitHeading({ id, first, second }: { id: string; first: string; second: string }) {
   return (
     <h2 className="split-heading" id={id}>
@@ -135,7 +158,15 @@ function SplitHeading({ id, first, second }: { id: string; first: string; second
   )
 }
 
-function ProjectPreview({ visual, title }: { visual: (typeof projects)[number]['visual']; title: string }) {
+function ProjectPreview({ visual, title, screenshot }: { visual: (typeof projects)[number]['visual']; title: string; screenshot: string | null }) {
+  if (screenshot) {
+    return (
+      <div className="project-preview shot-preview">
+        <img src={assetPath(screenshot)} alt={`Screenshot of ${title}`} loading="lazy" />
+      </div>
+    )
+  }
+
   if (visual === 'chronos') {
     return (
       <div className="project-preview chronos-preview" aria-hidden="true">
@@ -337,9 +368,9 @@ function App() {
               <span className="profile-location"><MapPin size={14} /> Cebu City, Philippines</span>
               <div className="profile-links">
                 <a href="https://github.com/choonhows" target="_blank" rel="noreferrer" aria-label="GitHub" data-label="GitHub"><GitBranch size={21} /></a>
+                <a href={linkedinUrl} target="_blank" rel="noreferrer" aria-label="LinkedIn" data-label="LinkedIn"><LinkedinIcon /></a>
                 <a href="mailto:cjtan2406@gmail.com" aria-label="Email" data-label="Email"><Mail size={21} /></a>
                 <a href={assetPath('Chrislyr-John-Tan-CV.pdf')} download aria-label="Download CV" data-label="Download CV"><Download size={21} /></a>
-                <a href="#projects" onClick={(event) => scrollToSection(event, 'projects')} aria-label="View projects" data-label="Projects"><FolderKanban size={21} /></a>
               </div>
             </div>
           </article>
@@ -351,7 +382,7 @@ function App() {
             <p className="hero-intro">I turn ideas into reliable mobile and web systems, from offline-first applications to tested APIs and automated scheduling workflows.</p>
 
             <div className="hero-stats reveal" aria-label="Portfolio highlights">
-              <div><strong>04</strong><span>FEATURED<br />PROJECTS</span></div>
+              <div><strong>FE</strong><span>PHILNITS<br />PASSER</span></div>
               <div><strong>2027</strong><span>EXPECTED<br />GRADUATION</span></div>
             </div>
 
@@ -374,7 +405,7 @@ function App() {
             <div className="project-list reveal">
               {projects.map((project) => (
                 <a className="project-row" href={project.href} target="_blank" rel="noreferrer" key={project.title}>
-                  <ProjectPreview visual={project.visual} title={project.title} />
+                  <ProjectPreview visual={project.visual} title={project.title} screenshot={project.screenshot} />
                   <div className="project-details">
                     <span>PROJECT / {project.number}</span>
                     <h3>{project.title}</h3>
@@ -389,7 +420,7 @@ function App() {
           </section>
 
           <section className="education-section page-section" id="about" aria-labelledby="education-title">
-            <SplitHeading id="education-title" first="EDUCATION" second="CREDENTIALS" />
+            <SplitHeading id="education-title" first="EXPERIENCE" second="EDUCATION" />
             <div className="education-list reveal">
               {education.map((item) => (
                 <article className="education-row" key={item.title}>
@@ -444,8 +475,11 @@ function App() {
               <a className="contact-row" href="https://github.com/choonhows" target="_blank" rel="noreferrer">
                 <span className="contact-label">02 / GITHUB</span><strong>github.com/choonhows</strong><span className="contact-action">OPEN <ExternalLink size={18} /></span>
               </a>
+              <a className="contact-row" href={linkedinUrl} target="_blank" rel="noreferrer">
+                <span className="contact-label">03 / LINKEDIN</span><strong>linkedin.com/in/chrislyr-tan</strong><span className="contact-action">OPEN <ExternalLink size={18} /></span>
+              </a>
               <a className="contact-row" href={assetPath('Chrislyr-John-Tan-CV.pdf')} download>
-                <span className="contact-label">03 / CURRICULUM VITAE</span><strong>Download CV</strong><span className="contact-action">DOWNLOAD <Download size={18} /></span>
+                <span className="contact-label">04 / CURRICULUM VITAE</span><strong>Download CV</strong><span className="contact-action">DOWNLOAD <Download size={18} /></span>
               </a>
             </address>
           </section>
