@@ -20,6 +20,7 @@ import {
   Sparkles,
   TestTube2,
   Wrench,
+  X,
 } from 'lucide-react'
 
 const assetPath = (fileName: string) => `${import.meta.env.BASE_URL}${fileName}`
@@ -36,48 +37,72 @@ const navItems = [
 
 type NavItem = (typeof navItems)[number]['id']
 
-const projects = [
+type Project = {
+  number: string
+  title: string
+  kind: string
+  summary: string
+  about: string
+  role: string
+  stack: string
+  visual: 'chronos' | 'bored' | 'caledoro' | 'nitpicker'
+  screenshot: string | null
+  links: { label: string; href: string }[]
+}
+
+const projects: Project[] = [
   {
     number: '01',
     title: 'Chronos',
     kind: 'Automated university class scheduling',
-    summary: 'One of four developers. I built FastAPI services, role-based access, scheduling and export workflows, PostgreSQL integration tests, and the Jira–GitHub workflow.',
+    summary: 'ARM-guided genetic scheduling with tested APIs and AI-assisted Jira/GitHub MCP ticketing.',
+    about: 'A class scheduling system for USC DCISM. Association rule mining guides a genetic algorithm, while hard constraints such as room and teacher conflicts always stay enforced.',
+    role: 'One of four developers. I built FastAPI and SQLAlchemy services and React workflows for sign-in, role-based access, scheduling, validation, timetable views, and CSV/XLSX export. I wrote unit and PostgreSQL integration tests and designed the Jira–GitHub workflow with AI-assisted MCP commands.',
     stack: 'Python · FastAPI · PostgreSQL · React · TypeScript · DEAP · Mlxtend',
-    href: 'https://github.com/saiimonn/Chronos',
     visual: 'chronos',
     screenshot: null,
+    links: [{ label: 'View repository', href: 'https://github.com/saiimonn/Chronos' }],
   },
   {
     number: '02',
     title: 'Bored',
     kind: 'Collaborative short-break game collection',
-    summary: 'I built the Color, Shape, and Pattern daily games, plus their tests and the CI/CD deployment checks.',
+    summary: 'Built Color, Shape, and Pattern with daily challenges, local progress, accessible controls, tests, and CI/CD.',
+    about: 'A live collection of 10 short word, memory, timing, and puzzle games, set on a pixel-art Japanese city map.',
+    role: 'I built the Color, Shape, and Pattern daily games: deterministic daily challenges, saved first results, local progress, and keyboard and pointer controls. I also added game and persistence tests, CI/CD deployment checks, and security dependency patches.',
     stack: 'Next.js · React · TypeScript · Tailwind CSS · Node.js',
-    href: 'https://bored.dcism.org',
     visual: 'bored',
     screenshot: 'bored-screenshot.webp',
+    links: [{ label: 'Visit live site', href: 'https://bored.dcism.org' }],
   },
   {
     number: '03',
     title: 'Caledoro',
     kind: 'Offline-first mobile productivity',
-    summary: 'One of three developers. I integrated Gemini task breakdown and worked on local storage, state, notifications, and testing.',
+    summary: 'Tasks, focus sessions, calendar tools, widgets, and AI-assisted task breakdown.',
+    about: 'An offline-first Android app that combines task management, Pomodoro focus sessions, calendar tools, and home-screen widgets.',
+    role: 'One of three developers. I integrated the Gemini API for task breakdown and worked on local storage, state management, notifications, testing, debugging, and responsive layouts.',
     stack: 'Flutter · Dart · Riverpod · Hive · Gemini API',
-    href: 'https://github.com/choonhows/Caledoro',
     visual: 'caledoro',
     screenshot: null,
+    links: [{ label: 'View repository', href: 'https://github.com/choonhows/Caledoro' }],
   },
   {
     number: '04',
     title: 'NitPicker',
     kind: 'PhilNITS FE preparation platform',
-    summary: 'Contributor. I built skeleton loading and workflow fixes, and ran functional, usability, and responsive testing.',
+    summary: 'Mock exams, explanations, analytics, and previous-exam browsing.',
+    about: 'A study platform for the PhilNITS FE exam with configurable mock exams, answer explanations, performance analytics, and previous-exam browsing.',
+    role: 'Contributor. I built skeleton loading states and workflow refinements, and ran functional, interaction, usability, and responsive testing.',
     stack: 'React · TypeScript · Vite · Tailwind CSS',
-    href: 'https://nitpicker.dcism.org',
     visual: 'nitpicker',
     screenshot: 'nitpicker-screenshot.webp',
+    links: [
+      { label: 'Visit live site', href: 'https://nitpicker.dcism.org' },
+      { label: 'View repository', href: 'https://github.com/choonhows/NitPicker' },
+    ],
   },
-] as const
+]
 
 const education = [
   {
@@ -158,15 +183,7 @@ function SplitHeading({ id, first, second }: { id: string; first: string; second
   )
 }
 
-function ProjectPreview({ visual, title, screenshot }: { visual: (typeof projects)[number]['visual']; title: string; screenshot: string | null }) {
-  if (screenshot) {
-    return (
-      <div className="project-preview shot-preview">
-        <img src={assetPath(screenshot)} alt={`Screenshot of ${title}`} loading="lazy" />
-      </div>
-    )
-  }
-
+function ProjectPreview({ visual, title }: { visual: Project['visual']; title: string }) {
   if (visual === 'chronos') {
     return (
       <div className="project-preview chronos-preview" aria-hidden="true">
@@ -195,11 +212,80 @@ function ProjectPreview({ visual, title, screenshot }: { visual: (typeof project
   )
 }
 
+function ProjectDialog({ project, onClose }: { project: Project | null; onClose: () => void }) {
+  const dialogRef = useRef<HTMLDialogElement>(null)
+
+  useEffect(() => {
+    const dialog = dialogRef.current
+    if (!dialog) return
+    if (project && !dialog.open) dialog.showModal()
+    if (!project && dialog.open) dialog.close()
+  }, [project])
+
+  return (
+    <dialog
+      ref={dialogRef}
+      className="project-dialog"
+      aria-labelledby="project-dialog-title"
+      onClose={onClose}
+      onClick={(event) => {
+        if (event.target === event.currentTarget) onClose()
+      }}
+      data-lenis-prevent
+    >
+      {project && (
+        <article>
+          <button type="button" className="dialog-close" onClick={onClose} aria-label="Close project details">
+            <X size={20} />
+          </button>
+          <div className="dialog-media">
+            {project.screenshot ? (
+              <img src={assetPath(project.screenshot)} alt={`Screenshot of ${project.title}`} />
+            ) : (
+              <ProjectPreview visual={project.visual} title={project.title} />
+            )}
+          </div>
+          <div className="dialog-body">
+            <span className="dialog-eyebrow">PROJECT / {project.number}</span>
+            <h2 id="project-dialog-title">{project.title}</h2>
+            <p className="dialog-kind">{project.kind}</p>
+
+            <h3>What it is</h3>
+            <p>{project.about}</p>
+
+            <h3>My role</h3>
+            <p>{project.role}</p>
+
+            <h3>Built with</h3>
+            <ul className="dialog-stack">
+              {project.stack.split(' · ').map((tool) => <li key={tool}>{tool}</li>)}
+            </ul>
+
+            <div className="dialog-links">
+              {project.links.map((link, index) => (
+                <a className={index === 0 ? 'dialog-link is-primary' : 'dialog-link'} href={link.href} target="_blank" rel="noreferrer" key={link.href}>
+                  {link.label} <ArrowUpRight size={17} />
+                </a>
+              ))}
+            </div>
+          </div>
+        </article>
+      )}
+    </dialog>
+  )
+}
+
 function App() {
   const [active, setActive] = useState<NavItem>('home')
   const [avatarSrc, setAvatarSrc] = useState(() => assetPath('profile.jpg'))
   const [copyStatus, setCopyStatus] = useState<'idle' | 'copied' | 'failed'>('idle')
   const lenisRef = useRef<Lenis | null>(null)
+  const [openProject, setOpenProject] = useState<Project | null>(null)
+
+  useEffect(() => {
+    if (openProject) lenisRef.current?.stop()
+    else lenisRef.current?.start()
+  }, [openProject])
 
   useEffect(() => {
     let disposed = false
@@ -404,8 +490,8 @@ function App() {
             <SplitHeading id="projects-title" first="RECENT" second="PROJECTS" />
             <div className="project-list reveal">
               {projects.map((project) => (
-                <a className="project-row" href={project.href} target="_blank" rel="noreferrer" key={project.title}>
-                  <ProjectPreview visual={project.visual} title={project.title} screenshot={project.screenshot} />
+                <button className="project-row" type="button" aria-haspopup="dialog" onClick={() => setOpenProject(project)} key={project.title}>
+                  <ProjectPreview visual={project.visual} title={project.title} />
                   <div className="project-details">
                     <span>PROJECT / {project.number}</span>
                     <h3>{project.title}</h3>
@@ -413,8 +499,8 @@ function App() {
                     <small>{project.summary}</small>
                     <i>{project.stack}</i>
                   </div>
-                  <ArrowUpRight className="row-arrow" size={19} />
-                </a>
+                  <ArrowRight className="row-arrow" size={19} />
+                </button>
               ))}
             </div>
           </section>
@@ -485,6 +571,8 @@ function App() {
           </section>
         </div>
       </main>
+
+      <ProjectDialog project={openProject} onClose={() => setOpenProject(null)} />
 
       <footer className="site-footer">
         <div><strong>CHRISLYR JOHN P. TAN</strong><span>Computer Science · Software Development</span></div>
