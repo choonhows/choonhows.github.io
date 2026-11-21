@@ -422,7 +422,6 @@ function App() {
             <div className="notes-list reveal">
               {workingNotes.map((note) => (
                 <article className="note-row" key={note.title}>
-                  <ArrowUpRight size={18} />
                   <h3>{note.title}</h3>
                   <p>{note.description}</p>
                   <span>{note.meta}</span>

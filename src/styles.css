@@ -9,7 +9,7 @@
   --surface-raised: oklch(25% .032 153);
   --bone: oklch(94% .018 92);
   --sand: oklch(84% .045 82);
-  --heading-dark: oklch(27% .03 154);
+  --heading-dark: oklch(48% .035 152);
   --muted: oklch(70% .025 145);
   --subtle: oklch(57% .022 147);
   --lichen: oklch(80% .13 126);
@@ -332,8 +332,6 @@ img { display: block; max-width: 100%; }
   transition: background .35s ease, transform .4s var(--ease);
 }
 
-.note-row:hover { background: var(--surface); transform: translateX(5px); }
-.note-row > svg { position: absolute; top: 24px; right: 16px; color: var(--lichen); }
 .note-row h3 { max-width: 19ch; margin: 0; font-size: 26px; font-weight: 600; line-height: 1.2; }
 .note-row p { max-width: 57ch; margin: 14px 0 20px; color: var(--muted); font-size: 16px; line-height: 1.45; }
 .note-row > span { color: var(--subtle); font-size: 14px; }
@@ -478,8 +476,7 @@ a.contact-row:hover .contact-action svg, button.contact-row:hover .contact-actio
   .tool-item h3 { font-size: 21px; }
 
   .note-row { min-height: 250px; padding-inline: 12px; }
-  .note-row:hover { transform: none; }
-  .note-row h3 { padding-right: 25px; font-size: 23px; }
+  .note-row h3 { font-size: 23px; }
   .note-row p { font-size: 15px; }
 
   .contact-section > .split-heading { height: 210px; }
