@@ -294,7 +294,7 @@ button.project-row { width: 100%; margin: 0; border: 0; color: inherit; font: in
 
 /* Project dialog */
 .project-dialog {
-  width: min(720px, calc(100% - 40px));
+  width: min(880px, calc(100% - 40px));
   max-width: none;
   max-height: calc(100dvh - 48px);
   margin: auto;
@@ -315,12 +315,43 @@ button.project-row { width: 100%; margin: 0; border: 0; color: inherit; font: in
 @keyframes dialog-in { from { opacity: 0; transform: translateY(14px) scale(.985); } }
 @keyframes backdrop-in { from { opacity: 0; } }
 .project-dialog article { position: relative; }
-.dialog-media { aspect-ratio: 16 / 9; max-height: 40vh; width: 100%; overflow: hidden; background: #fff; border-bottom: 1px solid var(--line); }
+.dialog-media { aspect-ratio: 16 / 10; width: 100%; overflow: hidden; background: #fff; border-bottom: 1px solid var(--line); }
 .dialog-media { position: relative; }
 .gallery-track { height: 100%; display: flex; overflow-x: auto; overscroll-behavior-x: contain; scroll-snap-type: x mandatory; scrollbar-width: none; }
 .gallery-track::-webkit-scrollbar { display: none; }
 .gallery-track:focus-visible { outline-offset: -4px; }
-.gallery-track img { flex: 0 0 100%; width: 100%; height: 100%; display: block; object-fit: cover; object-position: top; scroll-snap-align: start; }
+.gallery-track img { flex: 0 0 100%; width: 100%; height: 100%; display: block; object-fit: contain; scroll-snap-align: start; cursor: zoom-in; }
+.gallery-expand {
+  position: absolute;
+  z-index: 2;
+  right: 14px;
+  bottom: 12px;
+  width: 42px;
+  height: 42px;
+  display: grid;
+  place-items: center;
+  color: var(--bone);
+  background: oklch(16% .02 155 / .82);
+  border: 1px solid oklch(100% 0 0 / .12);
+  border-radius: 50%;
+  cursor: pointer;
+  transition: background .25s ease;
+}
+.gallery-expand:hover { background: var(--canvas); }
+.gallery.is-expanded {
+  position: fixed;
+  z-index: 5;
+  inset: 0;
+  aspect-ratio: auto;
+  background: oklch(9% .02 155);
+  border: 0;
+}
+.gallery.is-expanded .gallery-track { animation: backdrop-in .25s ease; }
+.gallery.is-expanded .gallery-track img { padding: 64px 84px 72px; cursor: default; }
+.gallery.is-expanded .gallery-expand { top: 16px; right: 16px; bottom: auto; }
+.gallery.is-expanded .gallery-nav.is-prev { left: 20px; }
+.gallery.is-expanded .gallery-nav.is-next { right: 20px; }
+.gallery.is-expanded .gallery-dots { bottom: 22px; }
 .gallery-nav {
   position: absolute;
   top: 50%;
@@ -526,6 +557,8 @@ a.contact-row:hover .contact-action svg, button.contact-row:hover .contact-actio
   .dialog-body h3 + p { font-size: 15px; }
   .dialog-links { flex-direction: column; }
   .gallery-nav { width: 36px; height: 36px; }
+  .gallery-expand { width: 36px; height: 36px; right: 10px; bottom: 8px; }
+  .gallery.is-expanded .gallery-track img { padding: 64px 10px 72px; }
   .gallery-nav.is-prev { left: 8px; }
   .gallery-nav.is-next { right: 8px; }
   .dialog-link { justify-content: center; }
@@ -641,6 +674,7 @@ a.contact-row:hover .contact-action svg, button.contact-row:hover .contact-actio
 
 @media (prefers-reduced-motion: reduce) {
   .project-dialog[open], .project-dialog[open]::backdrop { animation: none; }
+  .gallery.is-expanded .gallery-track { animation: none; }
   .dialog-close:hover { transform: none; }
   html { scroll-behavior: auto; }
   *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; scroll-behavior: auto !important; }

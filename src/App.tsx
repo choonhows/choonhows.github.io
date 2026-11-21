@@ -16,6 +16,7 @@ import {
   GitBranch,
   Home,
   Mail,
+  Maximize2,
   MapPin,
   MonitorSmartphone,
   PencilLine,
@@ -99,10 +100,7 @@ const projects: Project[] = [
     stack: 'React · TypeScript · Vite · Tailwind CSS',
     visual: 'nitpicker',
     screenshots: ['projects/nitpicker-1.webp', 'projects/nitpicker-2.webp', 'projects/nitpicker-3.webp', 'projects/nitpicker-4.webp'],
-    links: [
-      { label: 'Visit live site', href: 'https://nitpicker.dcism.org' },
-      { label: 'View repository', href: 'https://github.com/choonhows/NitPicker' },
-    ],
+    links: [{ label: 'Visit live site', href: 'https://nitpicker.dcism.org' }],
   },
 ]
 
@@ -214,9 +212,22 @@ function ProjectPreview({ visual, title }: { visual: Project['visual']; title: s
   )
 }
 
-function Gallery({ title, images }: { title: string; images: string[] }) {
+function Gallery({ title, images, expanded, onExpandedChange }: { title: string; images: string[]; expanded: boolean; onExpandedChange: (expanded: boolean) => void }) {
   const trackRef = useRef<HTMLDivElement>(null)
+  const indexRef = useRef(0)
   const [index, setIndex] = useState(0)
+
+  useEffect(() => {
+    const track = trackRef.current
+    if (!track) return
+    const target = indexRef.current
+    requestAnimationFrame(() => {
+      track.scrollTo({ left: target * track.clientWidth, behavior: 'auto' })
+      track.focus({ preventScroll: true })
+    })
+  }, [expanded])
+
+  const toggleExpanded = () => onExpandedChange(!expanded)
 
   const go = (next: number) => {
     const track = trackRef.current
@@ -228,7 +239,7 @@ function Gallery({ title, images }: { title: string; images: string[] }) {
 
   return (
     <div
-      className="dialog-media gallery"
+      className={expanded ? 'dialog-media gallery is-expanded' : 'dialog-media gallery'}
       role="group"
       aria-roledescription="carousel"
       aria-label={`${title} screenshots`}
@@ -244,7 +255,9 @@ function Gallery({ title, images }: { title: string; images: string[] }) {
         aria-label={`Screenshot ${index + 1} of ${images.length}. Use arrow keys or swipe to see more.`}
         onScroll={(event) => {
           const track = event.currentTarget
-          setIndex(Math.round(track.scrollLeft / track.clientWidth))
+          const next = Math.round(track.scrollLeft / track.clientWidth)
+          indexRef.current = next
+          setIndex(next)
         }}
       >
         {images.map((src, imageIndex) => (
@@ -252,10 +265,19 @@ function Gallery({ title, images }: { title: string; images: string[] }) {
             src={assetPath(src)}
             alt={`${title} screenshot ${imageIndex + 1} of ${images.length}`}
             loading={imageIndex === 0 ? 'eager' : 'lazy'}
+            onClick={expanded ? undefined : toggleExpanded}
             key={src}
           />
         ))}
       </div>
+      <button
+        type="button"
+        className="gallery-expand"
+        onClick={toggleExpanded}
+        aria-label={expanded ? 'Exit full screen' : 'View screenshots full screen'}
+      >
+        {expanded ? <X size={20} /> : <Maximize2 size={18} />}
+      </button>
       {images.length > 1 && (
         <>
           <button type="button" className="gallery-nav is-prev" onClick={() => go(index - 1)} disabled={index === 0} aria-label="Previous screenshot">
@@ -284,6 +306,13 @@ function Gallery({ title, images }: { title: string; images: string[] }) {
 
 function ProjectDialog({ project, onClose }: { project: Project | null; onClose: () => void }) {
   const dialogRef = useRef<HTMLDialogElement>(null)
+  const [expandedFor, setExpandedFor] = useState<string | null>(null)
+  const expanded = project !== null && expandedFor === project.title
+
+  const handleClose = () => {
+    setExpandedFor(null)
+    onClose()
+  }
 
   useEffect(() => {
     const dialog = dialogRef.current
@@ -297,19 +326,30 @@ function ProjectDialog({ project, onClose }: { project: Project | null; onClose:
       ref={dialogRef}
       className="project-dialog"
       aria-labelledby="project-dialog-title"
-      onClose={onClose}
+      onClose={handleClose}
+      onCancel={(event) => {
+        if (!expanded) return
+        event.preventDefault()
+        setExpandedFor(null)
+      }}
       onClick={(event) => {
-        if (event.target === event.currentTarget) onClose()
+        if (event.target === event.currentTarget) handleClose()
       }}
       data-lenis-prevent
     >
       {project && (
         <article>
-          <button type="button" className="dialog-close" onClick={onClose} aria-label="Close project details">
+          <button type="button" className="dialog-close" onClick={handleClose} aria-label="Close project details">
             <X size={20} />
           </button>
           {project.screenshots.length > 0 ? (
-            <Gallery key={project.title} title={project.title} images={project.screenshots} />
+            <Gallery
+              key={project.title}
+              title={project.title}
+              images={project.screenshots}
+              expanded={expanded}
+              onExpandedChange={(next) => setExpandedFor(next ? project.title : null)}
+            />
           ) : (
             <div className="dialog-media">
               <ProjectPreview visual={project.visual} title={project.title} />
