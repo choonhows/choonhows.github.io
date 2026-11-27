@@ -63,7 +63,7 @@ const projects: Project[] = [
     role: 'One of four developers. I built FastAPI and SQLAlchemy services and React workflows for sign-in, role-based access, scheduling, validation, timetable views, and CSV/XLSX export. I wrote unit and PostgreSQL integration tests and designed the Jira–GitHub workflow with AI-assisted MCP commands.',
     stack: 'Python · FastAPI · PostgreSQL · React · TypeScript · DEAP · Mlxtend',
     visual: 'chronos',
-    screenshots: [],
+    screenshots: ['projects/chronos-1.webp', 'projects/chronos-2.webp', 'projects/chronos-3.webp', 'projects/chronos-4.webp'],
     links: [{ label: 'View repository', href: 'https://github.com/saiimonn/Chronos' }],
   },
   {
@@ -87,7 +87,7 @@ const projects: Project[] = [
     role: 'One of three developers. I integrated the Gemini API for task breakdown and worked on local storage, state management, notifications, testing, debugging, and responsive layouts.',
     stack: 'Flutter · Dart · Riverpod · Hive · Gemini API',
     visual: 'caledoro',
-    screenshots: [],
+    screenshots: ['projects/caledoro-1.webp', 'projects/caledoro-2.webp'],
     links: [{ label: 'View repository', href: 'https://github.com/choonhows/Caledoro' }],
   },
   {
